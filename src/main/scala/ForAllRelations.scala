@@ -31,9 +31,9 @@ object ForAllRelations extends App{
   /**
     * for Project table
     */
-/*  val tableCreate = Await.result(ForProjectRepo.create, Duration.Inf)
+ /* val tableCreate = Await.result(ForProjectRepo.create, Duration.Inf)
   println("table created")
-  val insertRes = ForProjectRepo.insert(Project(4,12,"carbon data", 2.5))
+ val insertRes = ForProjectRepo.insert(Project(4,12,"carbon data", 2.5))
   val res = insertRes.map{
     res => s"$res row inserted"
   }.recover {
@@ -42,19 +42,23 @@ object ForAllRelations extends App{
 
   val deleteRes = ForProjectRepo.delete(1)
 
-  val updateRes = Await.result(ForProjectRepo.update(1, "carbon data"), Duration.Inf)
+  val updateRes = Await.result(ForProjectRepo.update(Project(4, 11, "carbon data", 2.5)), Duration.Inf)
 
   val getAllRes = Await.result(ForProjectRepo.getAllProjects, Duration.Inf)
   println(getAllRes)
-  val upsertRes = Await.result(ForProjectRepo.upsert(Project(2, 11, "google", 3.0)), Duration.Inf)
+
+  val upsertRes = Await.result(ForProjectRepo.upsert(Project(5, 12, "google", 3.0)), Duration.Inf)
+
   val customRes = Await.result(ForProjectRepo.oldProjects, Duration.Inf)
-  println(customRes)*/
+  println(customRes)
 
-//  val insertAtOnceRes = Await.result(ForProjectRepo.insertAtOnce(Project(4, 11, "google", 2.5),Project(5, 11, "carbon data", 2.5), Project(6, 12, "google", 3.5)), Duration.Inf)
+  val insertAtOnceRes = Await.result(ForProjectRepo.insertAtOnce(Project(4, 11, "google", 2.5),Project(5, 11, "carbon data", 2.5), Project(6, 12, "google", 3.5)), Duration.Inf)
 
-//  val insertAfterDeleteRes = Await.result(ForProjectRepo.insertAfterDelete(Project(7, 11, "microsoft", 1.5)), Duration.Inf)
-//    val plainSqlRes = Await.result(ForProjectRepo.plainSqlQuery, Duration.Inf)
+  val insertAfterDeleteRes = Await.result(ForProjectRepo.insertAfterDelete(Project(7, 11, "microsoft", 1.5)), Duration.Inf)
+    val plainSqlRes = Await.result(ForProjectRepo.plainSqlQuery, Duration.Inf)
 
+  val insertObjectRes = Await.result(ForProjectRepo.insertObject(Project(9, 12, "hp", 3.5)), Duration.Inf)
+  println(insertObjectRes)*/
 
 /*  val joinResult = Await.result(ForProjectRepo.joiningTables, Duration.Inf)
   println(joinResult)*/

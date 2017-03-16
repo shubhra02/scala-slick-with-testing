@@ -55,7 +55,11 @@ class ProjectTest  extends AsyncFunSuite{
       test("joining two tables using leftjoin") {
         testing.zippingTables.map(data => assert(data.size === 2))
       }
-    
+
+      test("inserting project record should return an object") {
+        testing.insertObject(Project(118, 11, "google", 2.5)).map(data => assert(data === Project(8, 11, "google", 2.5)))
+      }
+
 
     }
 

@@ -15,7 +15,7 @@ import slick.sql.FixedSqlStreamingAction
    this : DBComponent =>
    import driver.api._
   class ProjectTable(tag: Tag) extends Table[Project](tag, "projectTable"){
-    val projectId = column[Int]("projectid", O.PrimaryKey)
+    val projectId = column[Int]("projectid", O.PrimaryKey, O.AutoInc)
     val empId = column[Int]("empid")
     val pName = column[String]("project_name")
     val projectDuration = column[Double]("project_duration")
@@ -32,7 +32,7 @@ trait ProjectRepo extends ProjectTable {
 
   def create = db.run(projectQuery.schema.create)
   def insert(pro: Project) = db.run {
-    projectQuery += pro
+    projectQuery returning projectQuery.map(_.projectId) += pro
   }
   def delete(id: Int): Future[Int] = {
     val query = projectQuery.filter(data => data.projectId === id)
@@ -79,7 +79,7 @@ trait ProjectRepo extends ProjectTable {
   }
 
   def plainSqlQuery = {
-    val action = sqlu"Select * from projectTable;"
+    val action = sqlu"Insert into projectTable values(7, 13, 'microsoft', 2.5);"
     db.run(action)
   }
 /*
@@ -116,6 +116,12 @@ def joiningTables = {
     db.run(zipJoinQuery.to[List].result)
   }
 
+
+  def insertObject(project: Project) : Future[Project] = {
+    val insertQuery = projectQuery returning projectQuery.map(_.projectId) into ((data, id) => data.copy(empId = id))
+      val action = insertQuery += project
+    db.run(action)
+  }
 /*  def zipWithJoinTables = {
     val zipWithJoin = for {
       res <- employeeTableQuery.zipWith(projectQuery, (e: Employee, p: Project) => (e.name, p.pName))
