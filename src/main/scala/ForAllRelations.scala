@@ -50,9 +50,11 @@ object ForAllRelations extends App{
   val customRes = Await.result(ForProjectRepo.oldProjects, Duration.Inf)
   println(customRes)*/
 
-//  val insertAtOnceRes = Await.result(ForProjectRepo.insertAtOnce, Duration.Inf)
+//  val insertAtOnceRes = Await.result(ForProjectRepo.insertAtOnce(Project(4, 11, "google", 2.5),Project(5, 11, "carbon data", 2.5), Project(6, 12, "google", 3.5)), Duration.Inf)
 
 //  val insertAfterDeleteRes = Await.result(ForProjectRepo.insertAfterDelete(Project(7, 11, "microsoft", 1.5)), Duration.Inf)
+//    val plainSqlRes = Await.result(ForProjectRepo.plainSqlQuery, Duration.Inf)
+
 
 /*  val joinResult = Await.result(ForProjectRepo.joiningTables, Duration.Inf)
   println(joinResult)*/

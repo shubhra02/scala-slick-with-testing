@@ -1,12 +1,13 @@
 package com.example
 
 import com.example.Models.Employee
-import com.example.connectionProvider.MySqlDBComponent
+import com.example.connectionProvider.{DBComponent, MySqlDBComponent}
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.Future
+
 trait EmployeeTable {
-  this : MySqlDBComponent =>
+  this : DBComponent =>
   import driver.api._
    class EmployeeTable(tag: Tag) extends Table[Employee](tag, "emptable"){
      val id = column[Int]("id", O.PrimaryKey)
@@ -21,7 +22,7 @@ trait EmployeeTable {
 }
 
 trait EmployeeRepo extends EmployeeTable {
-  this : MySqlDBComponent =>
+  this : DBComponent =>
   import driver.api._            //object of db to hit query to db
 
   def create: Future[Unit] = db.run(employeeTableQuery.schema.create)

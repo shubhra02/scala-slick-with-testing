@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.Models.{Employee, Project}
-import com.example.connectionProvider.MySqlDBComponent
+import com.example.connectionProvider.{DBComponent, MySqlDBComponent}
 import slick.dbio.Effect.Read
 import slick.jdbc.PostgresProfile.api._
 
@@ -12,7 +12,7 @@ import slick.sql.FixedSqlStreamingAction
 
  trait ProjectTable extends EmployeeTable{
 
-   this : MySqlDBComponent =>
+   this : DBComponent =>
    import driver.api._
   class ProjectTable(tag: Tag) extends Table[Project](tag, "projectTable"){
     val projectId = column[Int]("projectid", O.PrimaryKey)
@@ -27,7 +27,7 @@ import slick.sql.FixedSqlStreamingAction
 }
 
 trait ProjectRepo extends ProjectTable {
-  this : MySqlDBComponent =>
+  this : DBComponent =>
   import driver.api._            //object of db to hit query to db
 
   def create = db.run(projectQuery.schema.create)
@@ -69,13 +69,18 @@ trait ProjectRepo extends ProjectTable {
 
   }
 
-  def insertAtOnce: Future[Int] = {
-    val query1 = projectQuery += Project(4, 11, "google", 2.5)
-    val query2 = projectQuery += Project(5, 11, "carbon data", 2.5)
-    val query3 = projectQuery += Project(6, 12, "google", 3.5)
+  def insertAtOnce(project1: Project, project2: Project, project3: Project): Future[Int] = {
+    val query1 = projectQuery += project1
+    val query2 = projectQuery += project2
+    val query3 = projectQuery += project3
     db.run((query1 andThen query2 andThen(query3)).cleanUp(x => x match {case Some(_) => projectQuery.delete
                                                                           case None => projectQuery.result}))
 //    db.run(query1 andThen query2 andThen(query3)
+  }
+
+  def plainSqlQuery = {
+    val action = sqlu"Select * from projectTable;"
+    db.run(action)
   }
 /*
   def showNameAndId = {

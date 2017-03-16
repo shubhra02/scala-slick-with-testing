@@ -3,9 +3,10 @@ package com.example.connectionProvider
 import slick.jdbc.{JdbcProfile, MySQLProfile}
 import slick.jdbc.MySQLProfile.api._
 
-trait MySqlDBComponent{
+trait MySqlDBComponent extends DBComponent {
 
- val driver : JdbcProfile =  MySQLProfile
+ val driver = MySQLProfile
+ import driver.api._
   val db : Database = Database.forConfig("mysqlDB")
 
 }

@@ -37,8 +37,26 @@ class ProjectTest  extends AsyncFunSuite{
       }
 
       test("insert multiple records at once") {
-        testing.insertAtOnce.map(data => assert(data == 1))
+        testing.insertAtOnce(Project(115, 11, "google", 2.5),Project(116, 11, "carbon data", 2.5), Project(117, 12, "google", 3.5)).map(data => assert(data == 3))
       }
+
+      test("executing plain sql query") {
+        testing.plainSqlQuery.map(data => assert(data == 1))
+      }
+
+      test("joining two tables using join") {
+        testing.joiningTables.map(data => assert(data.size === 2))
+      }
+
+      test("joining two tables using leftjoin") {
+        testing.leftJoiningTables.map(data => assert(data.size === 2))
+      }
+
+      test("joining two tables using leftjoin") {
+        testing.zippingTables.map(data => assert(data.size === 2))
+      }
+    
+
     }
 
 }

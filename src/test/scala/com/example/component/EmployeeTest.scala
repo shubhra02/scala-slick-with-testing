@@ -25,7 +25,7 @@ class EmployeeTest extends AsyncFunSuite{
     }
 
     test("update or insert Employee record") {
-      testing.upsert(Employee(14, "Aditya", 2.5)).map(data=>assert(data == false || data == true))
+      testing.upsert(Employee(14, "Aditya", 2.5)).map(data => assert(data == false || data == true))
     }
 
     test("retrieve employees with experience more than 2 years") {
